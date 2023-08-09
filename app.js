@@ -8,6 +8,10 @@ const path = require("path");
 //variables de entorno
 dotenv.config({ path: ".env" });
 
+// Se importa la instancia de conexión a la base de datos - (debe ser después de leer las variables de entorno)
+const { sequelize } = require('./database/config');
+
+
 const app = express();
 
 //configuración del motor de plantillas
@@ -26,6 +30,13 @@ app.use(
   })
 );
 app.use(morgan("dev"));
+
+// Se ejecuta una instancia de conexión a la base de datos
+sequelize.authenticate()
+  .then(() => { 
+    console.log('Conexión a base de datos exitosa');
+ })
+  .catch((error) => console.log('Error al conectar a base de datos', error));
 
 app.use("/", require("./routes/galleries.routes"));
 
