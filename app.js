@@ -27,6 +27,8 @@ app.use(
 );
 app.use(morgan("dev"));
 
+app.use("/", require("./routes/galleries.routes"));
+
 app.listen(process.env.PORT, () => {
   console.log(`Servidor en ${process.env.APP_URL}:${process.env.PORT}`);
 });
