@@ -1,4 +1,5 @@
-const imagesList = document.querySelector("#galleries");
+const imagesLocal = document.querySelector("#galeriaLocal");
+const imagesRemota = document.querySelector("#galeriaRemota");
 
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOM Cargado");
@@ -7,13 +8,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const images = await fetchImages();
     showImages(images);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 });
 
 const showImages = (images) => {
   if (images.length === 0) {
-    imagesList.innerHTML = `
+    imagesLocal.innerHTML = `
           <p>
               <span class="text-center">No hay imagenes aún.</span>
           </p>
@@ -21,10 +22,20 @@ const showImages = (images) => {
     return;
   }
 
-  categories.forEach((image) => {
-    categoriesList.innerHTML += `
-                  <span>${image}</span>
+  images.forEach((image) => {
+    console.log(image);
+    imagesLocal.innerHTML += `
+            <figure class="figure col-3">
+              <img src="http://localhost:4000/api/${image.id}/show" class="figure-img img-fluid rounded" alt="...">
+              <figcaption class="figure-caption text-end">Imagen Local</figcaption>
+            </figure>
               `;
+    imagesRemota.innerHTML += `
+              <figure class="figure col-3">
+                <img src="${image.url}" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption text-end">Imagen Alojada en Cloudinary</figcaption>
+              </figure>
+                `;
   });
 };
 
@@ -35,7 +46,7 @@ const fetchImages = async () => {
     return [];
   }
 
-  const data = response.json();
-
+  const data = await response.json();
+  console.log(data);
   return data;
 };

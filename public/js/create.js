@@ -5,8 +5,6 @@ const validationErrors = document.querySelector('#validationErrors');
 uploadForm.addEventListener("submit", async function (e)  {
   e.preventDefault();
 
-   console.log(image.files[0]);
-
    const fd = new FormData()
    fd.append("image", image.files[0]);
 
