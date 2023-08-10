@@ -12,6 +12,7 @@
     "nodemon": "^3.0.1"
   },
   "dependencies": {
+    "cloudinary": "^1.40.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
