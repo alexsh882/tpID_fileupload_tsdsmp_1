@@ -4,9 +4,11 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
+const fileUpload = require('express-fileupload');
 
 //variables de entorno
 dotenv.config({ path: ".env" });
+
 
 // Se importa la instancia de conexión a la base de datos - (debe ser después de leer las variables de entorno)
 const { sequelize } = require('./database/config');
@@ -30,6 +32,9 @@ app.use(
   })
 );
 app.use(morgan("dev"));
+
+//configuración de File Upload
+app.use(fileUpload());
 
 // Se ejecuta una instancia de conexión a la base de datos
 sequelize.authenticate()

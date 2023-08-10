@@ -1,19 +1,27 @@
 <%- include('../layouts/head.ejs') ;%>
 
 
+
 <body class="h-100 d-flex flex-column">
     <%- include('../layouts/nav'); %>
+    <% if (mensaje) { %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= mensaje ;%>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      <% } %>
     <div class="container-fluid py-5 px-md-5 col">
         <header class="d-flex align-items-center justify-content-between">
-            <h1>
-                Página de inicio
-            </h1>
+            <a class="btn btn-primary" href="/create">Agregar Nueva Imagen</a>
         </header>
         <main class="col h-100">
-
+            <section id="galleries">
+                
+            </section>
         </main>
     </div>
     <%- include('../layouts/footer'); %>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>
