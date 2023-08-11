@@ -71,7 +71,6 @@ const store = async (req, res) => {
   image.mv(uploadPath, function (err) {
     if (err) return res.status(500).json(err);
   });
-
   const {
     original_filename,
     format,
@@ -84,7 +83,7 @@ const store = async (req, res) => {
     created_at,
   } = await cloudinary.uploader.upload(uploadPath).catch((error) => {
     console.log(error);
-    res.status(500).json(error.message);
+    res.status(500).json(error);
   });
 
   const imagen = Image.create({

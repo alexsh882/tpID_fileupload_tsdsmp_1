@@ -8,16 +8,21 @@
                     Nueva Imagen
                 </header>
                 <main class="col h-100">
-                    <form class="d-flex flex-column mx-auto gap-3" id='uploadForm'
-                        encType="multipart/form-data">
+                    <form class="d-flex flex-column mx-auto gap-3" id='uploadForm' encType="multipart/form-data">
                         <input type="file" name="image" id="image" accept="image/jpeg, image/png, image/jpg" />
-                        <input class="btn btn-primary w-25" type='submit' value='Subir' />
+                        <div class="d-flex">
+                            <input id="btnSubmit" class="btn btn-primary w-25" type='submit' value='Subir' />
+                            <div id="spinner" class="spinner-border text-primary mx-2 visually-hidden" role="status">
+                            </div>
+                            <span class="visually-hidden">Enviando archivo, espere un momento...</span>
+
+                        </div>
                         <p id="validationErrors"></p>
                     </form>
                 </main>
             </div>
             <%- include('../layouts/footer'); %>
-            <script src="/js/create.js"></script>
+                <script src="/js/create.js"></script>
 
     </body>
 
