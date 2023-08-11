@@ -4,12 +4,10 @@
 
 <body class="h-100 d-flex flex-column">
     <%- include('../layouts/nav'); %>
-    <% if (mensaje) { %>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <%= mensaje ;%>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-      <% } %>
+    <div id="alertBanner" class="alert alert-warning alert-dismissible fade" role="alert">
+        <span id="bannerMessage"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>      
     <div class="container-fluid py-5 px-md-5 col">
         <header class="d-flex align-items-center justify-content-between">
             <a class="btn btn-primary" href="/create">Agregar Nueva Imagen</a>
