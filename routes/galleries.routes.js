@@ -1,14 +1,6 @@
-const { Router } = require("express");
+import { Router } from "express";
 
-const {
-  indexView, 
-  createView, 
-  index,
-  show,
-  update,
-  store,
-  destroy,
-} = require("../controllers/galleries.controller");
+import { indexView, createView, index, show, update, store, destroy } from "../controllers/galleries.controller.js";
 
 const router = Router();
 
@@ -23,4 +15,4 @@ router.post("/api", store);
 router.put("/api/:id/update", update);
 router.delete("/api/:id/destroy", destroy);
 
-module.exports = router;
+export default router;

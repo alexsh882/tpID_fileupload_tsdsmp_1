@@ -25,6 +25,7 @@ npm install
 Variables de entorno:
 ```bash
 PORT=
+APP_URL=
 DB_NAME=
 DB_USER=
 DB_PASSWORD=

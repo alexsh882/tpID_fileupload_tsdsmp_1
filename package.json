@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Galería / Servidor de archivos con Cloudinary",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon app.js"
   },

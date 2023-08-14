@@ -1,7 +1,9 @@
-const path = require("path");
-const fs = require("fs");
-const { cloudinary } = require("../utils/coudinary");
-const Image = require("../models/image.models");
+import { join } from "path";
+import { unlink } from "fs";
+import cloudinary from "../utils/coudinary.js";
+import Image from "../models/image.models.js";
+import fileDirName from '../utils/file-dir-name.js';
+const { __dirname } = fileDirName(import.meta);
 
 //VISTAS
 const indexView = (_req, res) => {
@@ -39,7 +41,7 @@ const show = async (req, res) => {
     },
   });
 
-  const uploadPath = path.join(
+  const uploadPath = join(
     __dirname,
     "../files/",
     `${image.original_filename}.${image.format}`
@@ -66,11 +68,18 @@ const store = async (req, res) => {
       .json({ mensaje: "La imagen ya existe en la base de datos." });
   }
 
-  const uploadPath = path.join(__dirname, "../files/", image.name);
+  const uploadPath = join(__dirname, "../files/", image.name);
 
   image.mv(uploadPath, function (err) {
     if (err) return res.status(500).json(err);
   });
+  const responseCl = await cloudinary.uploader.upload(uploadPath).catch((error) => {
+    console.log(error);
+    res.status(500).json(error);
+  });
+
+  console.log(responseCl);
+  
   const {
     original_filename,
     format,
@@ -81,10 +90,7 @@ const store = async (req, res) => {
     public_id,
     version_id,
     created_at,
-  } = await cloudinary.uploader.upload(uploadPath).catch((error) => {
-    console.log(error);
-    res.status(500).json(error);
-  });
+  } = responseCl;
 
   const imagen = Image.create({
     original_filename,
@@ -106,7 +112,7 @@ const store = async (req, res) => {
 const update = async (req, res) => {};
 
 const destroy = async (req, res) => {
-  const image = await Image.findOne({
+  const image = await findOne({
     where: {
       id: req.params.id,
     },
@@ -118,13 +124,13 @@ const destroy = async (req, res) => {
       .json({ message: "La imagen NO existe en la base de datos." });
   }
 
-  const uploadPath = path.join(
+  const uploadPath = join(
     __dirname,
     "../files/",
     `${image.original_filename}.${image.format}`
   );
 
-  fs.unlink(uploadPath, function (err) {
+  unlink(uploadPath, function (err) {
     if (err && err.code == "ENOENT") {
       // EL archivo no existe
       return res.status(404).json({ message: "El archivo no existe." });
@@ -146,12 +152,12 @@ const destroy = async (req, res) => {
   return res.status(200).json({ success: "Imagen eliminada correctamente." });
 };
 
-module.exports = {
+export {
   indexView,
   createView,
   index,
   show,
   update,
   store,
-  destroy,
+  destroy
 };

@@ -63,6 +63,10 @@ const deleteImage = async (id) => {
     bannerMessage.innerHTML = data.message;
     alertBanner.classList.add("show");
   }
+  
+  setTimeout(() => {
+    alertBanner.classList.remove("show");
+  }, 2000);
 
 };
 

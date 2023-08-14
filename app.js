@@ -1,17 +1,22 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
-const path = require("path");
-const fileUpload = require('express-fileupload');
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import path from "path";
+import 'dotenv/config'
+import fileUpload from 'express-fileupload';
+
+import fileDirName from './utils/file-dir-name.js';
+const { __dirname } = fileDirName(import.meta);
+
+import router from './routes/galleries.routes.js';
 
 //variables de entorno
-dotenv.config({ path: ".env" });
+// dotenv.config();
 
 
 // Se importa la instancia de conexión a la base de datos - (debe ser después de leer las variables de entorno)
-const { sequelize } = require('./database/config');
+import { sequelize } from './database/config.js';
 
 
 const app = express();
@@ -43,7 +48,7 @@ sequelize.authenticate()
  })
   .catch((error) => console.log('Error al conectar a base de datos', error));
 
-app.use("/", require("./routes/galleries.routes"));
+app.use("/", router);
 
 app.listen(process.env.PORT, () => {
   console.log(`Servidor en ${process.env.APP_URL}:${process.env.PORT}`);
