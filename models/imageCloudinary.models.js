@@ -1,7 +1,7 @@
 import { DataTypes, sequelize } from '../database/config.js';
 
 
-const Image = sequelize.define('Image', {
+const ImageCl = sequelize.define('ImageCl', {
   original_filename: DataTypes.STRING,
   format: DataTypes.STRING,
   resource_type: DataTypes.STRING,
@@ -14,14 +14,14 @@ const Image = sequelize.define('Image', {
 }, {
   sequelize,
   paranoid: true,
-  modelName: 'Image',
-  tableName: 'images',
+  modelName: 'ImageCl',
+  tableName: 'images_cloudinary',
   underscored: true
 });
 
-console.log('Image');
-Image.sync()
+console.log('ImageCl');
+ImageCl.sync()
 
-export default Image;
+export default ImageCl;
 
 

@@ -6,10 +6,13 @@ import path from "path";
 import 'dotenv/config'
 import fileUpload from 'express-fileupload';
 
+
 import fileDirName from './utils/file-dir-name.js';
 const { __dirname } = fileDirName(import.meta);
 
-import router from './routes/galleries.routes.js';
+import views from './routes/galleries.routes.js';
+import routesCl from './routes/cloudinary.routes.js';
+import routesLc from './routes/local.routes.js';
 
 //variables de entorno
 // dotenv.config();
@@ -48,7 +51,9 @@ sequelize.authenticate()
  })
   .catch((error) => console.log('Error al conectar a base de datos', error));
 
-app.use("/", router);
+app.use("/", views);
+app.use("/", routesCl);
+app.use("/", routesLc);
 
 app.listen(process.env.PORT, () => {
   console.log(`Servidor en ${process.env.APP_URL}:${process.env.PORT}`);
