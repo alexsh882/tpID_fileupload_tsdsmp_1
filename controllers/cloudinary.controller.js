@@ -2,6 +2,7 @@ import { join } from "path";
 import cloudinary from "../utils/coudinary.js";
 import ImageCl from "../models/imageCloudinary.models.js";
 import fileDirName from "../utils/file-dir-name.js";
+import { unlink } from "fs";
 const { __dirname } = fileDirName(import.meta);
 
 //APIS
@@ -43,7 +44,7 @@ const store = async (req, res) => {
       .json({ mensaje: "La imagen ya existe en la base de datos." });
   }
 
-  const uploadPath = join(__dirname, "../tmp/", image.name);
+  const uploadPath = join(__dirname, "../files/tmp/", image.name);
 
   image.mv(uploadPath, function (err) {
     if (err) return res.status(500).json(err);
@@ -81,6 +82,8 @@ const store = async (req, res) => {
     version_id,
     creation: created_at,
   });
+
+  unlink(uploadPath, function (error){});
 
 
   return res
